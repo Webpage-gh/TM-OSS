@@ -199,12 +199,32 @@ int calculateCpuUsage() {
 // Parses files that expose GPU busy time. Supports several formats:
 //   - single percentage value ("50")
 //   - busy/total pairs separated by whitespace, '@' or '/' ("1234 5678", "1234@5678")
+//   - MediaTek format: "usage idle" (e.g., "80 0 20" -> 80% usage)
 // Returns usage 0..100, or -1 when the file is unreadable/unsupported.
 static int readBusyPercentageFile(const std::string& path) {
     std::ifstream file(path);
     std::string line;
     if (!std::getline(file, line)) return -1;
 
+    // Special handling for MediaTek ged/hal/gpu_utilization format: "usage _ idle"
+    // First number is GPU usage, third number is GPU idle
+    if (path.find("/ged/hal/gpu_utilization") != std::string::npos) {
+        std::istringstream iss(line);
+        int usage = -1, idle = -1;
+        if (iss >> usage) {
+            int dummy;
+            if (iss >> dummy) iss >> idle;  // Skip second number, read third
+            
+            if (usage >= 0 && usage <= 100) {
+                return usage;
+            } else if (idle >= 0 && idle <= 100) {
+                return 100 - idle;  // Calculate usage from idle
+            }
+        }
+        return -1;
+    }
+
+    // Standard format parsing
     for (char& c : line) {
         if (!std::isdigit(static_cast<unsigned char>(c))) c = ' ';
     }
@@ -264,6 +284,10 @@ int calculateGpuUsage() {
     usage = readBusyPercentageFile("/sys/kernel/gpu/gpu_busy");
     if (usage >= 0) return usage;
     usage = readBusyPercentageFile("/sys/kernel/gpu/gpu_busy_percentage");
+    if (usage >= 0) return usage;
+
+    // MediaTek GED HAL
+    usage = readBusyPercentageFile("/sys/kernel/ged/hal/gpu_utilization");
     if (usage >= 0) return usage;
 
     // Root-only debugfs paths
