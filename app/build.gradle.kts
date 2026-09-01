@@ -114,9 +114,5 @@ dependencies {
 
     implementation(libs.androidx.room.ktx)
 
-
-    if (findProject(":taskmanager_pro") != null) {
-        implementation(project(":taskmanager_pro"))
-    }
     implementation(project(":main"))
 }

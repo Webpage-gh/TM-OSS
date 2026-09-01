@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.BatteryChargingFull
-import androidx.compose.material.icons.outlined.NetworkCheck
-import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -19,13 +15,9 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.rk.bridge.OpenSourceOnly
-import com.rk.bridge.ProBridge
-import com.rk.bridge.bridge
 import com.rk.taskmanager.ProcessViewModel
 import com.rk.taskmanager.R
 import com.rk.taskmanager.navControllerRef
@@ -49,7 +41,6 @@ private data class ResourceTab(
 
 sealed class TabIcon {
     data class Res(val id: Int) : TabIcon()
-    data class Vector(val image: ImageVector) : TabIcon()
 }
 
 private val tabs = listOf(
@@ -77,29 +68,7 @@ private val tabs = listOf(
         content = { modifier, _, gpuVm ->
             GPU(modifier, gpuVm)
         }
-    ),
-
-    ResourceTab(
-        labelRes = strings.net,
-        icon = TabIcon.Vector(Icons.Outlined.NetworkCheck),
-        content = { _, _, _ ->
-            if (bridge != null) bridge!!.NetScreen()
-            else OpenSourceOnly()
-        }
-    ),
-
-
-
-    ResourceTab(
-        labelRes = strings.bat,
-        icon = TabIcon.Vector(Icons.Outlined.BatteryChargingFull),
-        content = { _, _, _ ->
-            if (bridge != null) bridge!!.BatteryScreen()
-            else OpenSourceOnly()
-        }
     )
-
-
 
 )
 
@@ -122,14 +91,8 @@ fun ResourceHostScreen(
                     onClick = { currentResource = index },
                     icon = {
                         when (val icon = tab.icon) {
-
                             is TabIcon.Res -> Icon(
                                 painter = painterResource(icon.id),
-                                contentDescription = null
-                            )
-
-                            is TabIcon.Vector -> Icon(
-                                imageVector = icon.image,
                                 contentDescription = null
                             )
                         }
