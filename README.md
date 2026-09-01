@@ -1,7 +1,5 @@
-# TaskManager
+# TaskManager-OSS
 **Task Manager** is tool for android inspired from gnome system monitor
-
-[<img src="https://shields.rbtlog.dev/simple/com.rk.taskmanager" alt="RB shield">](https://shields.rbtlog.dev/com.rk.taskmanager)
 
 > [!IMPORTANT]
 Task Manager requires shizuku/root to work
@@ -13,6 +11,8 @@ Task Manager requires shizuku/root to work
 - [x] List process info (eg. ram usage,priority etc.)
 - [x] Kill linux process (Needs shizuku to be started by root)
 - [x] Kill android apps
+- [x] No pro features
+- [x] More GPU support
 
 # Screenshots
 <div>
@@ -28,9 +28,9 @@ Task Manager requires shizuku/root to work
 
 # Download
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="75">](https://play.google.com/store/apps/details?id=com.rk.taskmanager)
+Download OSS verison from [Github Release](https://github.com/Webpage-gh/TM-OSS/releases/latest)
 
 ## Find this app useful? :heart:
-Support it by giving a star :star: <br>
+Support [original version](https://github.com/Rohitkushvaha01/TaskManager) by giving a star :star: <br>
 Also, **__[follow](https://github.com/Rohitkushvaha01)__** me for my next creations!
 
