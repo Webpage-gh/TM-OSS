@@ -1,4 +1,4 @@
-package com.rk.components
+package com.rk.components.oss
 
 import android.content.ClipData
 import android.content.ClipboardManager

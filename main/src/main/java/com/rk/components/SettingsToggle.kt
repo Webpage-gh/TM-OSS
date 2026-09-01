@@ -1,4 +1,4 @@
-package com.rk.components
+package com.rk.components.oss
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.rk.components.compose.preferences.base.PreferenceTemplate
-import com.rk.components.compose.preferences.switch.PreferenceSwitch
+import com.rk.components.oss.compose.preferences.base.PreferenceTemplate
+import com.rk.components.oss.compose.preferences.switch.PreferenceSwitch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

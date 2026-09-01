@@ -1,4 +1,4 @@
-package com.rk.taskmanager
+package com.rk.taskmanager.oss
 
 import org.junit.Test
 

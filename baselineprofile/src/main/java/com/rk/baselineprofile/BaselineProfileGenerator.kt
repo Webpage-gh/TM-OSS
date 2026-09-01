@@ -1,4 +1,4 @@
-package com.rk.baselineprofile
+package com.rk.baselineprofile.oss
 
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.ext.junit.runners.AndroidJUnit4

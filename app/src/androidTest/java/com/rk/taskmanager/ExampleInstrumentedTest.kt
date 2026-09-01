@@ -1,4 +1,4 @@
-package com.rk.taskmanager
+package com.rk.taskmanager.oss
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.rk.taskmanager", appContext.packageName)
+        assertEquals("com.rk.taskmanager.oss", appContext.packageName)
     }
 }

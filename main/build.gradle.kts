@@ -14,7 +14,7 @@ val gitCommitDate: Provider<String> =
 
 
 android {
-    namespace = "com.rk.taskmanager"
+    namespace = "com.rk.taskmanager.oss"
     compileSdk {
         version = release(36)
     }

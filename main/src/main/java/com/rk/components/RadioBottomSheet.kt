@@ -1,4 +1,4 @@
-package com.rk.components
+package com.rk.components.oss
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,8 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.rk.components.BottomSheetContent
-import com.rk.components.compose.preferences.base.PreferenceTemplate
+import com.rk.components.oss.BottomSheetContent
+import com.rk.components.oss.compose.preferences.base.PreferenceTemplate
 
 data class RadioOption<T>(
     val id: T,

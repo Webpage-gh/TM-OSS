@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rk.bridge"
+    namespace = "com.rk.bridge.oss"
     compileSdk = 36
 
     defaultConfig {

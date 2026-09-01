@@ -1,4 +1,4 @@
-package com.rk.components
+package com.rk.components.oss
 
 /*
  * Copyright 2025 by Patryk Goworowski and Patrick Michalik.

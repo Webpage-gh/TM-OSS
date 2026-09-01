@@ -1,4 +1,4 @@
-package com.rk.bridge
+package com.rk.bridge.oss
 
 import org.junit.Test
 

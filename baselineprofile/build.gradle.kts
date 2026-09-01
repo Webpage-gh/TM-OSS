@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rk.baselineprofile"
+    namespace = "com.rk.baselineprofile.oss"
     compileSdk = 36
 
     compileOptions {

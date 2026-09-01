@@ -1,4 +1,4 @@
-package com.rk.baselineprofile
+package com.rk.baselineprofile.oss
 
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rk.taskmanagerd"
+    namespace = "com.rk.taskmanager.ossd"
     compileSdk = 36
     ndkVersion = "28.0.13004108"
 

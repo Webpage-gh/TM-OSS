@@ -11,7 +11,7 @@ plugins {
 
 
 android {
-    namespace = "com.rk.taskmanager.app"
+    namespace = "com.rk.taskmanager.oss.app"
     compileSdk = 37
 
     lint {
@@ -51,7 +51,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.rk.taskmanager"
+        applicationId = "com.rk.taskmanager.oss"
         minSdk = 26
         targetSdk = 37
 

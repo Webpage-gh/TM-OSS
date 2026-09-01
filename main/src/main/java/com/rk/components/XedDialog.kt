@@ -1,4 +1,4 @@
-package com.rk.components
+package com.rk.components.oss
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.rk.components.compose.preferences.base.PreferenceGroup
+import com.rk.components.oss.compose.preferences.base.PreferenceGroup
 
 @Composable
 fun XedDialog(onDismissRequest:()-> Unit,dialogProperties: DialogProperties = DialogProperties(usePlatformDefaultWidth = false),content: @Composable () -> Unit) {
