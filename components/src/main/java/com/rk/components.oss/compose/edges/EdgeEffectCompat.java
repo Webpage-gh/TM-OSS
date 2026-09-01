@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.rk.components.compose.edges;
+package com.rk.components.oss.compose.edges;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.EdgeEffect;
 
-import com.rk.components.compose.utils.Utilities;
+import com.rk.components.oss.compose.utils.Utilities;
 
 /**
  * Extension of {@link EdgeEffect} to allow backwards compatibility

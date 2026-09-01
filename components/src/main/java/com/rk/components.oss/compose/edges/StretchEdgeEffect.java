@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rk.components.compose.edges;
+package com.rk.components.oss.compose.edges;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
