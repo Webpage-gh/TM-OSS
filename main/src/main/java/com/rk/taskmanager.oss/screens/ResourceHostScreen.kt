@@ -74,7 +74,12 @@ fun ResourceHostScreen(
             usageText = if (cpuUsage < 0) stringResource(strings.no_data) else "$cpuUsage%",
             chartContent = { CPU(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     InfoItem(label = stringResource(strings.soc), value = cpuInfo?.soc ?: stringResource(strings.no_data))
                     HorizontalDivider()
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -129,7 +134,12 @@ fun ResourceHostScreen(
             usageText = if (gpuUsage < 0) stringResource(strings.no_data) else "$gpuUsage%",
             chartContent = { GPU(chartOnly = true, viewModel = gpuViewModel) },
             detailsContent = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     InfoItem(label = stringResource(strings.vendor), value = gpuInfo?.vendor ?: stringResource(strings.no_data))
                     HorizontalDivider()
                     InfoItem(label = stringResource(strings.gpu_model), value = gpuInfo?.renderer ?: stringResource(strings.no_data))
@@ -150,7 +160,12 @@ fun ResourceHostScreen(
             usageText = "$RamUsage%",
             chartContent = { RAM(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     InfoItem(label = stringResource(strings.used), value = FormatUtils.formatBytes(usedRam))
                     HorizontalDivider()
                     InfoItem(label = stringResource(strings.total), value = FormatUtils.formatBytes(totalRam))
