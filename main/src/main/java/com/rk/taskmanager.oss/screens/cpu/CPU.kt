@@ -85,123 +85,8 @@ fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel, chartOnly: B
         }
     }
 
-    if (chartOnly) {
-        // 只显示图表模式
-        UsageChart(
-            modelProducer = cpuGraphHandler.modelProducer,
-            lineColors = listOf(MaterialTheme.colorScheme.primary),
-            modifier = modifier.fillMaxSize()
-        )
-        return
-    }
-
-    // 完整模式
-    Column(modifier.verticalScroll(rememberScrollState())) {
-        UsageChart(
-            modelProducer = cpuGraphHandler.modelProducer,
-            lineColors = listOf(MaterialTheme.colorScheme.primary),
-            modifier = modifier
-        )
-
-    val usage by cpuUsage.collectAsState()
-
-    SettingsToggle(
-        description = stringResource(strings.cpu_usage_label, if (usage < 0) stringResource(strings.no_data) else "$usage%"),
-        showSwitch = false,
-        default = false
-    )
-
-    Spacer(modifier = Modifier.padding(vertical = 4.dp))
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        HorizontalDivider()
-
-        InfoCard {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                SectionHeader(stringResource(strings.processor_info))
-
-                InfoItem(label = stringResource(strings.soc), value = cpuInfo?.soc ?: stringResource(strings.no_data), highlighted = true)
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.architecture), cpuInfo?.arch ?: stringResource(strings.no_data))
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.abi), cpuInfo?.abi ?: stringResource(strings.no_data))
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.cores), cpuInfo?.cores.toString())
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.governor), cpuInfo?.governor ?: stringResource(strings.no_data))
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.temperature), if (temperature.toIntOrNull() != null) stringResource(strings.temp_c_estimated, temperature) else temperature)
-                    }
-                }
-            }
-        }
-
-        HorizontalDivider()
-
-        InfoCard {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                SectionHeader(stringResource(strings.system_stats))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.procs), viewModel.procCount.collectAsState().value.toString())
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.threads), viewModel.threadCount.collectAsState().value.toString())
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        InfoItem(stringResource(strings.uptime), uptime)
-                    }
-                }
-            }
-        }
-
-        HorizontalDivider()
-
-        if (cpuInfo?.clusters?.isNotEmpty() == true) {
-            cpuInfo?.clusters?.forEach { cluster ->
-                ClusterCard(cluster)
-            }
-        }
-    }
-
-    Spacer(modifier = Modifier.padding(vertical = 16.dp))
-}
+    LaunchedEffect(Unit) {
+        launch(Dispatchers.IO) {
             daemon_messages.collect { message ->
                 try {
                     val json = JSONObject(message)
@@ -216,6 +101,17 @@ fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel, chartOnly: B
         }
     }
 
+    if (chartOnly) {
+        // 只显示图表模式
+        UsageChart(
+            modelProducer = cpuGraphHandler.modelProducer,
+            lineColors = listOf(MaterialTheme.colorScheme.primary),
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
+
+    // 完整模式
     Column(modifier.verticalScroll(rememberScrollState())) {
         UsageChart(
             modelProducer = cpuGraphHandler.modelProducer,

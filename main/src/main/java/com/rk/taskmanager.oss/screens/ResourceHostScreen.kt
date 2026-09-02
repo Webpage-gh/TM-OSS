@@ -17,11 +17,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.rk.taskmanager.oss.ProcessViewModel
-import com.rk.taskmanager.oss.R
 import com.rk.taskmanager.oss.components.CollapsibleChartCard
 import com.rk.taskmanager.oss.components.InfoItem
 import com.rk.taskmanager.oss.screens.cpu.CPU
@@ -79,7 +77,7 @@ fun ResourceHostScreen(
         // 内存卡片
         CollapsibleChartCard(
             title = stringResource(strings.ram),
-            icon = painterResource(id = R.drawable.memory_alt_24px),
+            icon = Icons.Default.Memory,
             usageText = "60%", // 实际使用率
             chartContent = { RAM(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
