@@ -108,7 +108,8 @@ fun ResourceHostScreen(
                         }
                     }
                     HorizontalDivider()
-                    InfoItem(label = stringResource(strings.uptime), value = cpuUptime)
+                    val cpuUptimeValue by cpuUptime.collectAsState()
+                    InfoItem(label = stringResource(strings.uptime), value = cpuUptimeValue)
                     
                     // Clusters
                     if (cpuInfo?.clusters?.isNotEmpty() == true) {
