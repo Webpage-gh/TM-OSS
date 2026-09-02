@@ -65,7 +65,7 @@ suspend fun updateGpuGraph(usage: Int) {
 }
 
 @Composable
-fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel) {
+fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel, chartOnly: Boolean = false) {
     val gpuInfo by viewModel.gpuInfo.collectAsState()
     var showGpuInfoPopup by remember { mutableStateOf(false) }
     var gpuInfoIconBounds by remember { mutableStateOf(Rect.Zero) }
@@ -75,6 +75,17 @@ fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel) {
         gpuGraphHandler.refresh()
     }
 
+    if (chartOnly) {
+        // 只显示图表模式
+        UsageChart(
+            modelProducer = gpuGraphHandler.modelProducer,
+            lineColors = listOf(MaterialTheme.colorScheme.primary),
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
+
+    // 完整模式
     Column(modifier.verticalScroll(rememberScrollState())) {
         UsageChart(
             modelProducer = gpuGraphHandler.modelProducer,
