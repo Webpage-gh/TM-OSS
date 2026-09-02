@@ -55,10 +55,11 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 val gpuGraphHandler = GraphDataHandler(seriesCount = 1)
-private var gpuUsage by mutableIntStateOf(-1)
+private var _gpuUsage by mutableIntStateOf(-1)
+val gpuUsage: Int get() = _gpuUsage
 
 suspend fun updateGpuGraph(usage: Int) {
-    gpuUsage = usage
+    _gpuUsage = usage
     gpuGraphHandler.update(max(usage, 0)) {
         selectedscreen.intValue == 0 && navControllerRef.get()?.currentDestination?.route == SettingsRoutes.Home.route
     }

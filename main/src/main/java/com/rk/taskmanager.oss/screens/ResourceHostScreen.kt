@@ -28,6 +28,8 @@ import com.rk.taskmanager.oss.components.CollapsibleChartCard
 import com.rk.taskmanager.oss.components.InfoItem
 import com.rk.taskmanager.oss.screens.cpu.CPU
 import com.rk.taskmanager.oss.screens.cpu.cpuUsage
+import com.rk.taskmanager.oss.screens.cpu.cpuTemperature
+import com.rk.taskmanager.oss.screens.cpu.cpuInfo
 import com.rk.taskmanager.oss.screens.gpu.GPU
 import com.rk.taskmanager.oss.screens.gpu.GpuViewModel
 import com.rk.taskmanager.oss.screens.gpu.gpuUsage
@@ -50,6 +52,8 @@ fun ResourceHostScreen(
     gpuViewModel: GpuViewModel
 ) {
     val cpuUsage by cpuUsage.collectAsState()
+    val cpuTemperature by cpuTemperature.collectAsState()
+    val cpuInfo by cpuInfo.collectAsState()
     val gpuInfo by gpuViewModel.gpuInfo.collectAsState()
     
     Column(
@@ -65,11 +69,9 @@ fun ResourceHostScreen(
             chartContent = { CPU(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
                 Column {
-                    // 注意：这里需要从CPU组件获取详细信息，但为了简化，暂时使用占位符
-                    // 实际实现中，您可能需要将CPU组件的详细信息传递到此处
-                    InfoItem(label = stringResource(strings.temperature), value = "N/A")
+                    InfoItem(label = stringResource(strings.temperature), value = cpuTemperature)
                     HorizontalDivider()
-                    InfoItem(label = stringResource(strings.cores), value = "N/A")
+                    InfoItem(label = stringResource(strings.cores), value = cpuInfo?.cores?.toString() ?: stringResource(strings.no_data))
                 }
             }
         )
