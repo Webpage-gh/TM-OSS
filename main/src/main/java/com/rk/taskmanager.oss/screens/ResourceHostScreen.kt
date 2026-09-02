@@ -12,10 +12,14 @@ import androidx.compose.material.icons.filled.Memory
 import androidx.compose.material.icons.filled.VideoSettings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -23,10 +27,20 @@ import com.rk.taskmanager.oss.ProcessViewModel
 import com.rk.taskmanager.oss.components.CollapsibleChartCard
 import com.rk.taskmanager.oss.components.InfoItem
 import com.rk.taskmanager.oss.screens.cpu.CPU
+import com.rk.taskmanager.oss.screens.cpu.cpuUsage
 import com.rk.taskmanager.oss.screens.gpu.GPU
 import com.rk.taskmanager.oss.screens.gpu.GpuViewModel
+import com.rk.taskmanager.oss.screens.gpu.gpuUsage
 import com.rk.taskmanager.oss.screens.ram.RAM
+import com.rk.taskmanager.oss.screens.ram.RamUsage
+import com.rk.taskmanager.oss.screens.ram.usedRam
+import com.rk.taskmanager.oss.screens.ram.totalRam
+import com.rk.taskmanager.oss.screens.ram.usedSwap
+import com.rk.taskmanager.oss.screens.ram.totalSwap
+import com.rk.taskmanager.oss.screens.ram.SwapUsage
 import com.rk.commons.strings
+import com.rk.commons.getString
+import com.rk.commons.utils.FormatUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +49,9 @@ fun ResourceHostScreen(
     viewModel: ProcessViewModel,
     gpuViewModel: GpuViewModel
 ) {
+    val cpuUsage by cpuUsage.collectAsState()
+    val gpuInfo by gpuViewModel.gpuInfo.collectAsState()
+    
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -44,15 +61,15 @@ fun ResourceHostScreen(
         CollapsibleChartCard(
             title = stringResource(strings.cpu),
             icon = Icons.Default.Memory,
-            usageText = "50%", // 实际使用率
+            usageText = if (cpuUsage < 0) stringResource(strings.no_data) else "$cpuUsage%",
             chartContent = { CPU(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
                 Column {
-                    InfoItem(label = "温度", value = "45°C")
+                    // 注意：这里需要从CPU组件获取详细信息，但为了简化，暂时使用占位符
+                    // 实际实现中，您可能需要将CPU组件的详细信息传递到此处
+                    InfoItem(label = stringResource(strings.temperature), value = "N/A")
                     HorizontalDivider()
-                    InfoItem(label = "频率", value = "2.4 GHz")
-                    HorizontalDivider()
-                    InfoItem(label = "核心数", value = "8")
+                    InfoItem(label = stringResource(strings.cores), value = "N/A")
                 }
             }
         )
@@ -61,15 +78,15 @@ fun ResourceHostScreen(
         CollapsibleChartCard(
             title = stringResource(strings.gpu),
             icon = Icons.Default.VideoSettings,
-            usageText = "30%", // 实际使用率
+            usageText = if (gpuUsage < 0) stringResource(strings.no_data) else "$gpuUsage%",
             chartContent = { GPU(chartOnly = true, viewModel = gpuViewModel) },
             detailsContent = {
                 Column {
-                    InfoItem(label = "厂商", value = "Qualcomm")
+                    InfoItem(label = stringResource(strings.vendor), value = gpuInfo?.vendor ?: stringResource(strings.no_data))
                     HorizontalDivider()
-                    InfoItem(label = "型号", value = "Adreno 730")
+                    InfoItem(label = stringResource(strings.gpu_model), value = gpuInfo?.renderer ?: stringResource(strings.no_data))
                     HorizontalDivider()
-                    InfoItem(label = "Vulkan", value = "支持")
+                    InfoItem(label = stringResource(strings.vulkan), value = if (gpuInfo?.vulkanSupported == true) stringResource(strings.supported) else stringResource(strings.not_supported))
                 }
             }
         )
@@ -78,15 +95,15 @@ fun ResourceHostScreen(
         CollapsibleChartCard(
             title = stringResource(strings.ram),
             icon = Icons.Default.Memory,
-            usageText = "60%", // 实际使用率
+            usageText = "$RamUsage%",
             chartContent = { RAM(chartOnly = true, viewModel = viewModel) },
             detailsContent = {
                 Column {
-                    InfoItem(label = "已用", value = "4.8 GB")
+                    InfoItem(label = stringResource(strings.used), value = FormatUtils.formatBytes(usedRam))
                     HorizontalDivider()
-                    InfoItem(label = "可用", value = "3.2 GB")
+                    InfoItem(label = stringResource(strings.available), value = FormatUtils.formatBytes(totalRam - usedRam))
                     HorizontalDivider()
-                    InfoItem(label = "总计", value = "8.0 GB")
+                    InfoItem(label = stringResource(strings.total), value = FormatUtils.formatBytes(totalRam))
                 }
             }
         )

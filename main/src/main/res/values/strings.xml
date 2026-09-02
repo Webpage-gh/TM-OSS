@@ -199,6 +199,10 @@
     <string name="gpu_usage_unavailable">Your device doesn\'t allow reading GPU usage</string>
     <string name="gpu_usage_unavailable_help">GPU usage unavailable</string>
     <string name="cpu_usage_label">CPU - %s</string>
+    <string name="frequency">Frequency</string>
+    <string name="used">Used</string>
+    <string name="available">Available</string>
+    <string name="total">Total</string>
 
     <!-- Misc -->
     <string name="please_wait">Please wait</string>
