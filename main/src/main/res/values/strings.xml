@@ -176,6 +176,7 @@
     <string name="temperature">Temperature</string>
     <string name="system_stats">System Statistics</string>
     <string name="uptime">Uptime</string>
+    <string name="clusters">Clusters</string>
     <string name="min">Min</string>
     <string name="current">Current</string>
     <string name="max">Max</string>
@@ -185,6 +186,7 @@
     <!-- RAM Screen -->
     <string name="ram_label">RAM: %1$s/%2$s (%3$d%%)</string>
     <string name="swap_label">SWAP: %1$s/%2$s (%3$d%%)</string>
+    <string name="swap">Swap</string>
 
     <!-- GPU Screen -->
     <string name="vendor">Vendor</string>
