@@ -55,17 +55,18 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 val gpuGraphHandler = GraphDataHandler(seriesCount = 1)
-private var gpuUsage by mutableIntStateOf(-1)
+private var _gpuUsage by mutableIntStateOf(-1)
+val gpuUsage: Int get() = _gpuUsage
 
 suspend fun updateGpuGraph(usage: Int) {
-    gpuUsage = usage
+    _gpuUsage = usage
     gpuGraphHandler.update(max(usage, 0)) {
         selectedscreen.intValue == 0 && navControllerRef.get()?.currentDestination?.route == SettingsRoutes.Home.route
     }
 }
 
 @Composable
-fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel) {
+fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel, chartOnly: Boolean = false) {
     val gpuInfo by viewModel.gpuInfo.collectAsState()
     var showGpuInfoPopup by remember { mutableStateOf(false) }
     var gpuInfoIconBounds by remember { mutableStateOf(Rect.Zero) }
@@ -75,6 +76,17 @@ fun GPU(modifier: Modifier = Modifier, viewModel: GpuViewModel) {
         gpuGraphHandler.refresh()
     }
 
+    if (chartOnly) {
+        // 只显示图表模式
+        UsageChart(
+            modelProducer = gpuGraphHandler.modelProducer,
+            lineColors = listOf(MaterialTheme.colorScheme.primary),
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
+
+    // 完整模式
     Column(modifier.verticalScroll(rememberScrollState())) {
         UsageChart(
             modelProducer = gpuGraphHandler.modelProducer,

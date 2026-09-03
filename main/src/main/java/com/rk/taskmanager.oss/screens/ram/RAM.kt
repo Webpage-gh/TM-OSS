@@ -72,11 +72,25 @@ suspend fun updateRamAndSwapGraph(usagePercent: Int, usageBytes: Long, totalByte
 }
 
 @Composable
-fun RAM(modifier: Modifier = Modifier, viewModel: ProcessViewModel) {
+fun RAM(modifier: Modifier = Modifier, viewModel: ProcessViewModel, chartOnly: Boolean = false) {
     LaunchedEffect(Unit) {
         ramGraphHandler.refresh()
     }
 
+    if (chartOnly) {
+        // 只显示图表模式
+        val ramColor = MaterialTheme.colorScheme.primary
+        val swapColor = MaterialTheme.colorScheme.tertiary
+        
+        UsageChart(
+            modelProducer = ramGraphHandler.modelProducer,
+            lineColors = listOf(ramColor, swapColor),
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
+
+    // 完整模式
     Column(modifier.verticalScroll(rememberScrollState())) {
         val ramColor = MaterialTheme.colorScheme.primary
         val swapColor = MaterialTheme.colorScheme.tertiary

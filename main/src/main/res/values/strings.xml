@@ -176,6 +176,7 @@
     <string name="temperature">Temperature</string>
     <string name="system_stats">System Statistics</string>
     <string name="uptime">Uptime</string>
+    <string name="clusters">Clusters</string>
     <string name="min">Min</string>
     <string name="current">Current</string>
     <string name="max">Max</string>
@@ -185,6 +186,7 @@
     <!-- RAM Screen -->
     <string name="ram_label">RAM: %1$s/%2$s (%3$d%%)</string>
     <string name="swap_label">SWAP: %1$s/%2$s (%3$d%%)</string>
+    <string name="swap">Swap</string>
 
     <!-- GPU Screen -->
     <string name="vendor">Vendor</string>
@@ -199,6 +201,10 @@
     <string name="gpu_usage_unavailable">Your device doesn\'t allow reading GPU usage</string>
     <string name="gpu_usage_unavailable_help">GPU usage unavailable</string>
     <string name="cpu_usage_label">CPU - %s</string>
+    <string name="frequency">Frequency</string>
+    <string name="used">Used</string>
+    <string name="available">Available</string>
+    <string name="total">Total</string>
 
     <!-- Misc -->
     <string name="please_wait">Please wait</string>

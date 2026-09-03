@@ -55,6 +55,15 @@ val cpuGraphHandler = GraphDataHandler(seriesCount = 1)
 private val _cpuUsage = MutableStateFlow(0)
 val cpuUsage = _cpuUsage.asStateFlow()
 
+private val _cpuTemperature = MutableStateFlow(strings.no_data.getString())
+val cpuTemperature = _cpuTemperature.asStateFlow()
+
+private val _cpuUptime = MutableStateFlow("")
+val cpuUptime = _cpuUptime.asStateFlow()
+
+private val _cpuInfo = MutableStateFlow<CpuInfoReader.CpuInfo?>(null)
+val cpuInfo = _cpuInfo.asStateFlow()
+
 fun setCpuUsage(value: Int) {
     _cpuUsage.value = value
 }
@@ -67,7 +76,7 @@ suspend fun updateCpuGraph(usage: Int) {
 }
 
 @Composable
-fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel) {
+fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel, chartOnly: Boolean = false) {
     LaunchedEffect(Unit) {
         cpuGraphHandler.refresh()
     }
@@ -81,6 +90,8 @@ fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel) {
             send_daemon_messages.emit(JSONObject().apply { put("cmd", "CTEMP_PING") }.toString())
             uptime = CpuInfoReader.getUptimeFormatted()
             cpuInfo = CpuInfoReader.read()
+            _cpuUptime.value = uptime
+            _cpuInfo.value = cpuInfo
             delay(2000)
         }
     }
@@ -94,6 +105,7 @@ fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel) {
                         val temp = json.optInt("temp", -1)
                         if (temp > 0) {
                             temperature = temp.toString()
+                            _cpuTemperature.value = temperature
                         }
                     }
                 } catch (e: Exception) {}
@@ -101,6 +113,17 @@ fun CPU(modifier: Modifier = Modifier, viewModel: ProcessViewModel) {
         }
     }
 
+    if (chartOnly) {
+        // 只显示图表模式
+        UsageChart(
+            modelProducer = cpuGraphHandler.modelProducer,
+            lineColors = listOf(MaterialTheme.colorScheme.primary),
+            modifier = modifier.fillMaxSize()
+        )
+        return
+    }
+
+    // 完整模式
     Column(modifier.verticalScroll(rememberScrollState())) {
         UsageChart(
             modelProducer = cpuGraphHandler.modelProducer,
